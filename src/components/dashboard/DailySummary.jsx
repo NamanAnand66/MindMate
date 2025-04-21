@@ -12,10 +12,9 @@ const DailySummary = () => {
   const [loading, setLoading] = useState(false);
   const [upliftingMessage, setUpliftingMessage] = useState('');
   
-  // Get today's date formatted
+
   const today = format(new Date(), 'EEEE, MMMM d');
   
-  // Find today's mood entry
   useEffect(() => {
     if (moodEntries.length === 0) return;
     
@@ -29,19 +28,18 @@ const DailySummary = () => {
     setTodayMood(todayEntry);
   }, [moodEntries]);
   
-  // Generate uplifting message
   useEffect(() => {
     const fetchMessage = async () => {
       try {
         setLoading(true);
         
-        // Determine mood context
+        
         let moodContext = 'neutral';
         
         if (todayMood) {
           moodContext = todayMood.mood;
         } else if (moodEntries.length > 0) {
-          // If no mood for today, use the most recent mood
+         
           moodContext = moodEntries[0].mood;
         }
         
@@ -63,7 +61,7 @@ const DailySummary = () => {
     fetchMessage();
   }, [todayMood, moodEntries]);
   
-  // Task stats
+  
   const pendingTasks = tasks.filter(task => !task.completed).length;
   const completedToday = tasks.filter(task => {
     if (!task.completed) return false;
@@ -74,7 +72,7 @@ const DailySummary = () => {
     return completedDate === todayDate;
   }).length;
   
-  // Get mood emoji
+  
   const getMoodEmoji = (moodValue) => {
     if (!moodValue) return '😐';
     const mood = moodTypes.find(m => m.value === moodValue);
@@ -83,7 +81,7 @@ const DailySummary = () => {
   
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-      {/* Header */}
+  
       <div className="bg-gradient-to-r from-primary-600 to-primary-500 dark:from-primary-900 dark:to-primary-800 text-white p-5 rounded-t-lg">
         <div className="flex justify-between items-center">
           <div>
@@ -107,9 +105,9 @@ const DailySummary = () => {
         </div>
       </div>
       
-      {/* Content */}
+     
       <div className="p-5 space-y-6">
-        {/* Uplifting message */}
+       
         <div className="bg-primary-50 dark:bg-primary-900/20 rounded-lg p-4 border border-primary-100 dark:border-primary-800">
           <div className="flex items-start">
             <Heart className="h-5 w-5 text-primary-500 mt-1 flex-shrink-0" />
@@ -118,10 +116,9 @@ const DailySummary = () => {
             </p>
           </div>
         </div>
-        
-        {/* Stats cards */}
+      
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Mood stats */}
+          
           <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3 flex items-center">
               <TrendingUp className="h-4 w-4 mr-1" />
@@ -157,7 +154,6 @@ const DailySummary = () => {
             )}
           </div>
           
-          {/* Task stats */}
           <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
             <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3 flex items-center">
               <CheckCircle className="h-4 w-4 mr-1" />
