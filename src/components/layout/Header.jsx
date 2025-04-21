@@ -16,7 +16,7 @@ const Header = ({ toggleSidebar }) => {
   return (
     <header className="fixed top-0 left-0 right-0 h-16 bg-white dark:bg-gray-800 shadow-sm z-10 transition-colors duration-300">
       <div className="h-full px-4 flex items-center justify-between">
-        {/* Left side - Logo and hamburger */}
+
         <div className="flex items-center space-x-4">
           <button
             onClick={toggleSidebar}
@@ -32,9 +32,8 @@ const Header = ({ toggleSidebar }) => {
           </Link>
         </div>
         
-        {/* Right side - Actions */}
+  
         <div className="flex items-center space-x-3">
-          {/* Theme toggle */}
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
@@ -47,7 +46,7 @@ const Header = ({ toggleSidebar }) => {
             )}
           </button>
           
-          {/* User menu */}
+    
           {user && (
             <div className="relative">
               <button
@@ -61,7 +60,7 @@ const Header = ({ toggleSidebar }) => {
                 </span>
               </button>
               
-              {/* Dropdown menu */}
+      
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-20">
                   <Link
