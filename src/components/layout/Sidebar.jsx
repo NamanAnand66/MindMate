@@ -15,12 +15,11 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const { user } = useSupabase();
   
-  // Close sidebar on location change (mobile)
   useEffect(() => {
     setIsOpen(false);
   }, [location, setIsOpen]);
   
-  // Close sidebar when clicking outside on mobile
+  
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (isOpen && e.target.closest('.sidebar') === null && !e.target.closest('button[aria-label="Toggle sidebar"]')) {
@@ -47,7 +46,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   
   return (
     <>
-      {/* Overlay for mobile */}
+  
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden transition-opacity duration-300"
@@ -55,13 +54,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         />
       )}
       
-      {/* Sidebar */}
+  
       <aside 
         className={`sidebar fixed md:static inset-y-0 left-0 z-30 w-64 bg-white dark:bg-gray-800 shadow-lg md:shadow-none transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         } flex flex-col h-full mt-16 md:mt-0`}
       >
-        {/* Mobile close button */}
+  
         <div className="p-4 md:hidden flex justify-end">
           <button
             onClick={() => setIsOpen(false)}
@@ -72,7 +71,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           </button>
         </div>
         
-        {/* Navigation */}
+        
         <nav className="flex-1 px-4 py-2 space-y-1">
           {navigationItems.map((item) => (
             <NavLink
@@ -93,7 +92,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           ))}
         </nav>
         
-        {/* Footer */}
+      
         <div className="p-4 border-t border-gray-200 dark:border-gray-700">
           <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
             <Heart className="h-3 w-3 mr-1 text-accent-500" />
