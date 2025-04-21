@@ -13,7 +13,7 @@ const JournalEntry = ({ onEntrySubmitted }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validation
+
     if (!mood) {
       setError('Please select a mood');
       return;
@@ -27,11 +27,11 @@ const JournalEntry = ({ onEntrySubmitted }) => {
         return;
       }
       
-      // Clear form
+     
       setMood('');
       setJournalText('');
       
-      // Call callback with data if provided
+     
       if (onEntrySubmitted) {
         onEntrySubmitted(data, aiResults);
       }
