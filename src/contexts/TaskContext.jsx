@@ -12,7 +12,7 @@ export const TaskProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch tasks for the logged-in user
+
   const fetchTasks = async (completed = null) => {
     if (!user) return;
     
@@ -33,7 +33,7 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  // Add a new task
+
   const addTask = async (title, description = '', category = 'wellness') => {
     if (!user) return { error: 'User not logged in' };
     
@@ -54,7 +54,7 @@ export const TaskProvider = ({ children }) => {
       
       if (error) throw error;
       
-      // Update the local state with the new task
+
       setTasks(prev => [data[0], ...prev]);
       
       return { data: data[0], error: null };
@@ -67,20 +67,20 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  // Toggle task completion status
+
   const toggleTaskCompletion = async (taskId) => {
     try {
       setLoading(true);
       setError(null);
       
-      // Find the task
+
       const task = tasks.find(t => t.id === taskId);
       
       if (!task) {
         throw new Error('Task not found');
       }
       
-      // Update the task
+
       const { data, error } = await updateTask(taskId, {
         completed: !task.completed,
         completed_at: !task.completed ? new Date().toISOString() : null,
@@ -88,7 +88,7 @@ export const TaskProvider = ({ children }) => {
       
       if (error) throw error;
       
-      // Update local state
+
       setTasks(prev => 
         prev.map(t => t.id === taskId ? data[0] : t)
       );
@@ -103,7 +103,7 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  // Remove a task
+
   const removeTask = async (taskId) => {
     try {
       setLoading(true);
@@ -113,7 +113,7 @@ export const TaskProvider = ({ children }) => {
       
       if (error) throw error;
       
-      // Update local state
+
       setTasks(prev => prev.filter(t => t.id !== taskId));
       
       return { error: null };
@@ -126,7 +126,7 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  // Get task completion statistics
+
   const getTaskStats = () => {
     if (!tasks.length) return {};
     
@@ -134,7 +134,7 @@ export const TaskProvider = ({ children }) => {
     const completedTasks = tasks.filter(task => task.completed).length;
     const completionRate = (completedTasks / totalTasks) * 100;
     
-    // Group by category
+
     const categories = tasks.reduce((acc, task) => {
       const category = task.category || 'uncategorized';
       
@@ -162,7 +162,7 @@ export const TaskProvider = ({ children }) => {
     };
   };
 
-  // Load tasks when user changes
+
   useEffect(() => {
     if (user) {
       fetchTasks();
