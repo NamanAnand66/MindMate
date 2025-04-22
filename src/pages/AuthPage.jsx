@@ -28,7 +28,7 @@ const AuthPage = () => {
           throw error;
         }
         
-        // Check if confirmation is required
+        
         if (data?.user && !data?.session) {
           setError('Please check your email for a confirmation link.');
         }
