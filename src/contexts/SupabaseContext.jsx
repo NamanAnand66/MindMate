@@ -11,24 +11,24 @@ export const SupabaseProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Initialize session and user on mount
+
   useEffect(() => {
     const initSession = async () => {
       try {
         setLoading(true);
         
-        // Get current session
+
         const { data: { session: currentSession } } = await supabase.auth.getSession();
         setSession(currentSession);
         
         if (currentSession?.user) {
           setUser(currentSession.user);
           
-          // Ensure the user has a profile
+
           await ensureUserProfile(currentSession.user);
         }
         
-        // Set up auth state listener
+
         const { data: { subscription } } = await supabase.auth.onAuthStateChange(
           async (_event, newSession) => {
             setSession(newSession);
@@ -36,7 +36,7 @@ export const SupabaseProvider = ({ children }) => {
             if (newSession?.user) {
               setUser(newSession.user);
               
-              // Ensure the user has a profile
+
               await ensureUserProfile(newSession.user);
             } else {
               setUser(null);
@@ -57,12 +57,12 @@ export const SupabaseProvider = ({ children }) => {
     initSession();
   }, []);
   
-  // Ensure user has a profile
+
   const ensureUserProfile = async (user) => {
     if (!user) return;
     
     try {
-      // Create or update user profile
+
       await upsertUserProfile({
         id: user.id,
         email: user.email,
@@ -73,7 +73,7 @@ export const SupabaseProvider = ({ children }) => {
     }
   };
 
-  // Sign up new user
+
   const signUp = async (email, password) => {
     try {
       setLoading(true);
@@ -85,7 +85,7 @@ export const SupabaseProvider = ({ children }) => {
       
       if (error) throw error;
       
-      // Ensure a profile is created for the new user
+
       if (data?.user) {
         await ensureUserProfile(data.user);
       }
@@ -100,7 +100,7 @@ export const SupabaseProvider = ({ children }) => {
     }
   };
 
-  // Sign in existing user
+
   const signIn = async (email, password) => {
     try {
       setLoading(true);
@@ -112,7 +112,7 @@ export const SupabaseProvider = ({ children }) => {
       
       if (error) throw error;
       
-      // Ensure a profile exists for the signed-in user
+
       if (data?.user) {
         await ensureUserProfile(data.user);
       }
@@ -127,7 +127,7 @@ export const SupabaseProvider = ({ children }) => {
     }
   };
 
-  // Sign out
+
   const signOut = async () => {
     try {
       setLoading(true);
