@@ -15,7 +15,7 @@ function App() {
   const { theme } = useTheme();
   const { session } = useSupabase();
   
-  // Apply theme class to document body
+  
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/auth" element={session ? <Navigate to="/" /> : <AuthPage />} />
         
-        {/* Protected routes */}
+       
         <Route element={<Layout />}>
           <Route path="/" element={session ? <Dashboard /> : <Navigate to="/auth" />} />
           <Route path="/journal" element={session ? <Journal /> : <Navigate to="/auth" />} />
@@ -38,7 +38,7 @@ function App() {
           <Route path="/settings" element={session ? <Settings /> : <Navigate to="/auth" />} />
         </Route>
 
-        {/* 404 route */}
+    
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
