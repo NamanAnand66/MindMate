@@ -13,7 +13,7 @@ export const MoodProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Mood types with emoji and color
+
   const moodTypes = [
     { value: 'joyful', emoji: '😄', label: 'Joyful', color: 'bg-success-500' },
     { value: 'calm', emoji: '😌', label: 'Calm', color: 'bg-primary-400' },
@@ -23,7 +23,7 @@ export const MoodProvider = ({ children }) => {
     { value: 'angry', emoji: '😠', label: 'Angry', color: 'bg-error-500' },
   ];
 
-  // Fetch mood entries for the logged-in user
+
   const fetchMoodEntries = async (startDate, endDate) => {
     if (!user) return;
     
@@ -44,7 +44,7 @@ export const MoodProvider = ({ children }) => {
     }
   };
 
-  // Add a new mood entry
+
   const addMoodEntry = async (mood, journalText = '', aiAnalysis = false) => {
     if (!user) return { error: 'User not logged in' };
     
@@ -56,28 +56,28 @@ export const MoodProvider = ({ children }) => {
       let emotionResult = null;
       let wellnessTip = null;
       
-      // Perform AI analysis if requested and journal text provided
+
       if (aiAnalysis && journalText) {
-        // Run sentiment analysis
+
         const { data: sentimentData, error: sentimentError } = await analyzeSentiment(journalText);
         if (!sentimentError) {
           sentimentResult = sentimentData;
         }
         
-        // Run emotion analysis
+
         const { data: emotionData, error: emotionError } = await analyzeEmotion(journalText);
         if (!emotionError) {
           emotionResult = emotionData;
         }
         
-        // Generate wellness tip
+
         const { data: tipData, error: tipError } = await generateWellnessTip(journalText);
         if (!tipError) {
           wellnessTip = tipData;
         }
       }
       
-      // Create the entry object
+
       const moodEntry = {
         user_id: user.id,
         mood,
@@ -94,7 +94,7 @@ export const MoodProvider = ({ children }) => {
       
       if (error) throw error;
       
-      // Update the local state with the new entry
+
       setMoodEntries(prev => [data[0], ...prev]);
       
       return { 
@@ -115,17 +115,17 @@ export const MoodProvider = ({ children }) => {
     }
   };
 
-  // Get mood statistics
+
   const getMoodStats = () => {
     if (!moodEntries.length) return {};
     
-    // Count occurrences of each mood
+
     const moodCounts = moodEntries.reduce((acc, entry) => {
       acc[entry.mood] = (acc[entry.mood] || 0) + 1;
       return acc;
     }, {});
     
-    // Calculate percentages
+
     const totalEntries = moodEntries.length;
     const moodPercentages = {};
     
@@ -133,7 +133,7 @@ export const MoodProvider = ({ children }) => {
       moodPercentages[mood] = (moodCounts[mood] / totalEntries) * 100;
     }
     
-    // Find most frequent mood
+
     let mostFrequentMood = null;
     let maxCount = 0;
     
@@ -152,7 +152,7 @@ export const MoodProvider = ({ children }) => {
     };
   };
 
-  // Load mood entries when user changes
+
   useEffect(() => {
     if (user) {
       fetchMoodEntries();
