@@ -11,7 +11,7 @@ const Dashboard = () => {
   const { moodEntries } = useMood();
   const { tasks } = useTask();
   
-  // Get user's first name from email
+  
   const firstName = user?.email?.split('@')[0] || 'Friend';
   
   return (
