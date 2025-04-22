@@ -22,7 +22,7 @@ const Settings = () => {
       </div>
       
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow divide-y divide-gray-200 dark:divide-gray-700">
-        {/* Profile section */}
+       
         <div className="p-6">
           <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4 flex items-center">
             <User className="h-5 w-5 mr-2 text-primary-500" />
@@ -41,7 +41,7 @@ const Settings = () => {
           </div>
         </div>
         
-        {/* Appearance section */}
+        
         <div className="p-6">
           <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4 flex items-center">
             {theme === 'dark' ? (
@@ -79,7 +79,7 @@ const Settings = () => {
           </div>
         </div>
         
-        {/* Privacy section */}
+        
         <div className="p-6">
           <h2 className="text-lg font-medium text-gray-900 dark:text-white mb-4 flex items-center">
             <Shield className="h-5 w-5 mr-2 text-primary-500" />
@@ -109,7 +109,6 @@ const Settings = () => {
           </div>
         </div>
         
-        {/* Sign out section */}
         <div className="p-6">
           <button
             onClick={handleSignOut}
@@ -121,7 +120,7 @@ const Settings = () => {
         </div>
       </div>
       
-      {/* Delete account confirmation dialog */}
+      
       {isDeleteDialogOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full p-6 animate-fade-in">
