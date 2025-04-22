@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useMood } from '../contexts/MoodContext';
 import { useTask } from '../contexts/TaskContext';
-import { BarChart2, Calendar, Sparkles, TrendingUp, PieChart } from 'lucide-react';
+import { BarChart2, Calendar, Sparkles, TrendingUp, PieChart, CheckSquare } from 'lucide-react';
 import { format, subDays } from 'date-fns';
 import { Pie, Bar } from 'react-chartjs-2';
 import {
@@ -15,7 +15,7 @@ import {
   Legend
 } from 'chart.js';
 
-// Register Chart.js components
+
 ChartJS.register(
   ArcElement,
   CategoryScale,
@@ -31,32 +31,31 @@ const Insights = () => {
   const { tasks } = useTask();
   const [timeRange, setTimeRange] = useState(30);
   
-  // Prepare mood distribution data for pie chart
+  
   const [moodDistribution, setMoodDistribution] = useState({
     labels: [],
     datasets: []
   });
   
-  // Prepare task completion data for bar chart
+ 
   const [taskCompletionData, setTaskCompletionData] = useState({
     labels: [],
     datasets: []
   });
   
-  // Prepare mood vs task data for comparison
+  
   const [moodVsTasksData, setMoodVsTasksData] = useState([]);
   
-  // Calculate mood distribution
+
   useEffect(() => {
     if (!moodEntries.length) return;
     
-    // Filter entries based on time range
     const cutoffDate = subDays(new Date(), timeRange);
     const filteredEntries = moodEntries.filter(entry => 
       new Date(entry.created_at) >= cutoffDate
     );
     
-    // Count occurrences of each mood
+  
     const moodCounts = {};
     const moodLabels = [];
     const moodColors = [];
@@ -65,7 +64,7 @@ const Insights = () => {
       moodCounts[type.value] = 0;
       moodLabels.push(type.label);
       
-      // Extract color from the Tailwind class
+     
       let color = '';
       if (type.color.includes('success')) color = 'rgba(34, 197, 94, 0.8)';
       else if (type.color.includes('primary')) color = 'rgba(139, 92, 246, 0.8)';
@@ -98,17 +97,17 @@ const Insights = () => {
     });
   }, [moodEntries, moodTypes, timeRange]);
   
-  // Calculate task completion by category
+  
   useEffect(() => {
     if (!tasks.length) return;
     
-    // Filter tasks based on time range
+    
     const cutoffDate = subDays(new Date(), timeRange);
     const filteredTasks = tasks.filter(task => 
       new Date(task.created_at) >= cutoffDate
     );
     
-    // Group tasks by category
+   
     const categories = {};
     
     filteredTasks.forEach(task => {
@@ -152,15 +151,15 @@ const Insights = () => {
     });
   }, [tasks, timeRange]);
   
-  // Calculate correlations between mood and task completion
+  
   useEffect(() => {
     if (!moodEntries.length || !tasks.length) return;
     
-    // Group entries by date
+    
     const entriesByDate = {};
     const tasksByDate = {};
     
-    // Process mood entries
+    
     moodEntries.forEach(entry => {
       const date = new Date(entry.created_at).toISOString().split('T')[0];
       
@@ -171,7 +170,7 @@ const Insights = () => {
       entriesByDate[date].push(entry);
     });
     
-    // Process tasks
+    
     tasks.forEach(task => {
       if (!task.completed || !task.completed_at) return;
       
@@ -184,7 +183,7 @@ const Insights = () => {
       tasksByDate[date].push(task);
     });
     
-    // Find dates that have both mood entries and completed tasks
+    
     const correlationData = [];
     
     Object.keys(entriesByDate).forEach(date => {
@@ -198,12 +197,12 @@ const Insights = () => {
           'angry': 0
         };
         
-        // Calculate average mood value for the day
+        
         const avgMood = entriesByDate[date].reduce((sum, entry) => {
           return sum + (moodValues[entry.mood] || 3);
         }, 0) / entriesByDate[date].length;
         
-        // Get number of completed tasks
+        
         const completedTaskCount = tasksByDate[date].length;
         
         correlationData.push({
@@ -215,7 +214,7 @@ const Insights = () => {
       }
     });
     
-    // Sort by date and limit to the number matching the time range
+    
     correlationData.sort((a, b) => new Date(b.date) - new Date(a.date));
     setMoodVsTasksData(correlationData.slice(0, timeRange));
   }, [moodEntries, tasks, timeRange]);
@@ -242,9 +241,9 @@ const Insights = () => {
         </div>
       </div>
       
-      {/* Main insights grid */}
+     
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Mood distribution */}
+
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
             <PieChart className="h-5 w-5 mr-2 text-primary-500" />
@@ -276,7 +275,7 @@ const Insights = () => {
           )}
         </div>
         
-        {/* Task completion by category */}
+       
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-5">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
             <CheckSquare className="h-5 w-5 mr-2 text-primary-500" />
@@ -315,7 +314,7 @@ const Insights = () => {
         </div>
       </div>
       
-      {/* Additional insights */}
+  
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
         <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-white flex items-center">
@@ -355,7 +354,7 @@ const Insights = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {moodVsTasksData.slice(0, 7).map((item, index) => {
-                      // Determine mood label
+          
                       let moodLabel = 'Neutral';
                       if (item.avgMood >= 4.5) moodLabel = 'Joyful';
                       else if (item.avgMood >= 3.5) moodLabel = 'Calm';
@@ -364,7 +363,7 @@ const Insights = () => {
                       else if (item.avgMood >= 0.5) moodLabel = 'Sad';
                       else if (item.avgMood >= 0) moodLabel = 'Angry';
                       
-                      // Determine emoji
+                      
                       let moodEmoji = '😐';
                       if (moodLabel === 'Joyful') moodEmoji = '😄';
                       else if (moodLabel === 'Calm') moodEmoji = '😌';
@@ -373,7 +372,7 @@ const Insights = () => {
                       else if (moodLabel === 'Sad') moodEmoji = '😢';
                       else if (moodLabel === 'Angry') moodEmoji = '😠';
                       
-                      // Determine correlation indicator
+                    
                       let correlation = '';
                       if (item.avgMood >= 3.5 && item.completedTaskCount >= 2) {
                         correlation = 'Strong positive';
