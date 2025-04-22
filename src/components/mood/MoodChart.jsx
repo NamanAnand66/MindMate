@@ -13,7 +13,6 @@ import {
   Legend
 } from 'chart.js';
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -34,7 +33,6 @@ const MoodChart = ({ timeRange = 7 }) => {
   useEffect(() => {
     if (!moodEntries.length) return;
 
-    // Map mood values to numeric values for visualization
     const moodValues = {
       'joyful': 5,
       'calm': 4,
@@ -44,7 +42,7 @@ const MoodChart = ({ timeRange = 7 }) => {
       'angry': 0
     };
 
-    // Get date range (last N days)
+
     const dateLabels = [];
     const today = new Date();
     
@@ -53,7 +51,7 @@ const MoodChart = ({ timeRange = 7 }) => {
       dateLabels.push(format(date, 'MMM d'));
     }
 
-    // Group entries by date
+
     const entriesByDate = {};
     
     moodEntries.forEach(entry => {
@@ -71,20 +69,19 @@ const MoodChart = ({ timeRange = 7 }) => {
       }
     });
 
-    // Calculate average mood value for each day
+
     const moodData = dateLabels.map(label => {
       const entries = entriesByDate[label] || [];
-      if (entries.length === 0) return null; // No data point
+      if (entries.length === 0) return null; 
       
-      // Calculate average mood value
       const sum = entries.reduce((total, entry) => {
-        return total + (moodValues[entry.mood] ?? 3); // Default to neutral if not found
+        return total + (moodValues[entry.mood] ?? 3); 
       }, 0);
       
       return sum / entries.length;
     });
 
-    // Prepare chart data
+   
     setChartData({
       labels: dateLabels,
       datasets: [
