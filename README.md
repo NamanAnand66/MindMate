@@ -35,11 +35,11 @@ MindMate is a calming and intelligent daily wellness app that helps you reflect,
 | Layer        | Tech                          |
 |--------------|-------------------------------|
 | **Frontend** | React.js (Functional + Hooks) |
-| **Styling**  | Tailwind CSS (or Chakra UI)   |
+| **Styling**  | Tailwind CSS    |
 | **Routing**  | React Router                  |
 | **State**    | React Context API             |
 | **Database** | Supabase                      |
 | **AI**       | Hugging Face (Free Models)    |
-| **Extras**   | GitHub, Vercel/Netlify        |
+| **Extras**   | GitHub, Netlify        |
 
 ---
